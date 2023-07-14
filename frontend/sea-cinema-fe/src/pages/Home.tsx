@@ -1,4 +1,4 @@
-import { Flex, VStack } from "@chakra-ui/react"
+import { Flex, Box, Center, Image } from "@chakra-ui/react"
 import { useEffect,useState } from "react"
 import { Link } from "react-router-dom"
 
@@ -22,15 +22,20 @@ const Home = () => {
 
 
     return (
-        <Flex paddingLeft='10%' paddingTop='12px'>
-            {movies && (<VStack>
-                {
-                    movies.map((mv) => (
-                        <Link key={mv.id} to={"movies/" + mv.id}>{mv.title}</Link>
-                    ))
-                }
-            </VStack>)}
-        </Flex>
+        <Center flexWrap='wrap'>
+                {movies && (<Flex paddingLeft='20px' paddingTop='20px' flexWrap='wrap'>
+                    {
+                        movies.map((mv) => (
+                            <Link key={mv.id} to={"movies/" + mv.id}>
+                                <Box w='300px' h='470px' outline='4px solid black' padding='10px' margin='10px'>
+                                    <Image src={mv.poster_url} outline='2px solid black' w='280px' h='420px'/>
+                                    <Center textAlign='center' paddingTop='9px'>{mv.title}</Center>
+                                </Box>
+                            </Link>                            
+                        ))
+                    }
+                </Flex>)}
+        </Center>
     )
 
 }

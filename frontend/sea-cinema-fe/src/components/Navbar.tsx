@@ -6,6 +6,17 @@ import LoginData from "../interface/LoginData"
 
 const Navbar = (props: LoginData) => {
 
+    function separator(number: number) {
+        // Convert the number to a string
+        let numberString = number.toString();
+      
+        // Use a regular expression to insert commas as thousand separators
+        numberString = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      
+        // Return the formatted number string
+        return numberString;
+      }
+
     const [loginStatus,setLoginStatus] = useState(-1)
     
     const [loginUsername,setLoginUsername] = useState('')
@@ -49,10 +60,6 @@ const Navbar = (props: LoginData) => {
         }
     }
 
-    // useEffect(() => {
-    //     fetchData()
-    // }, [])
-
     return(
         <Flex 
             bgGradient='linear(to-b, #3F3F3F, #1F1F1F)'
@@ -76,7 +83,7 @@ const Navbar = (props: LoginData) => {
                             color:'#EEEEEE'
                         }}
                     >
-                        SIX-SIX-an
+                        SEA Cinema
                     </Box>
                 </Link>
             </HStack>
@@ -111,7 +118,7 @@ const Navbar = (props: LoginData) => {
                                     <PopoverBody>
                                         <VStack>
                                             <Text>{props.data() && props.data().name}</Text>
-                                            <Text>Saldo: Rp. {props.data() && props.data().balance}</Text>
+                                            <Text>Saldo Anda Rp{props.data() && separator(props.data().balance)}</Text>
                                             <Link to="/profile">Profil</Link>
                                         </VStack>
                                         <Center paddingTop='8px'>

@@ -34,8 +34,6 @@ app.post("/auth/register", async (req,res) => {
             return
         }
 
-        console.log('ngab')
-
         const user = new User(data,username,password,name,age)
 
         await user.hashPassword()
@@ -197,7 +195,6 @@ app.post("/order", (req,res) => {
             if (user) {
                 const { movie_id,seats } = req.body
                 const result = user.bookMovie(movie_id,seats)
-                console.log(result)
                 res.status(200).json(result)
             }
         } else res.status(200).json({success: false})

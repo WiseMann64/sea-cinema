@@ -1,10 +1,21 @@
 
-import { Box, Button, Center, FormControl, HStack, Input, Text, VStack } from "@chakra-ui/react"
+import { Box, Button, Center, Flex, FormControl, HStack, Input, Text, VStack } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom"
 import Ticket from "../components/Ticket"
 
 const Profile = ({ data }: any) => {
+
+    function separator(number: number) {
+        // Convert the number to a string
+        let numberString = number.toString();
+      
+        // Use a regular expression to insert commas as thousand separators
+        numberString = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      
+        // Return the formatted number string
+        return numberString;
+      }
 
     if (!data) {
         return <Navigate to="/" replace />
@@ -73,8 +84,9 @@ const Profile = ({ data }: any) => {
     }, [])
     
     return (
-        <Box>
-            <Text>Saldo Anda Rp. {data.balance},-</Text>
+        <VStack paddingTop='30px'>
+            <Text fontSize='15pt' fontWeight='bold'>Halo, {data.name}</Text>
+            <Text>Saldo Anda Rp. {separator(data.balance)},-</Text>
             <HStack>
                 <Text 
                     onClick={() => {
@@ -84,7 +96,7 @@ const Profile = ({ data }: any) => {
                         setWithdrawAmount('')
                     }}
                     _hover={{
-                        color:'#EEEEEE',
+                        color:'#AAAAAA',
                         cursor: 'pointer'
                     }}
                 >
@@ -99,7 +111,7 @@ const Profile = ({ data }: any) => {
                         setWithdrawAmount('')
                     }}
                     _hover={{
-                        color:'#EEEEEE',
+                        color:'#AAAAAA',
                         cursor: 'pointer'
                     }}
                 >
@@ -108,7 +120,7 @@ const Profile = ({ data }: any) => {
             </HStack>
             {showTopup ? (
                 <VStack>
-                    <FormControl width='20%'>
+                    <FormControl width='100%'>
                         <Input value={topupAmount} onChange={(event) => setTopupAmount(event.target.value)} placeholder='Jumlah Topup' type="number"/>
                     </FormControl>
                     <Center paddingTop='8px'>
@@ -117,7 +129,7 @@ const Profile = ({ data }: any) => {
                 </VStack>
             ) : showWithdraw ? (
                 <VStack>
-                    <FormControl width='20%'>
+                    <FormControl width='100%'>
                         <Input value={withdrawAmount} onChange={(event) => setWithdrawAmount(event.target.value)} placeholder='Jumlah Withdraw' type="number"/>
                     </FormControl>
                     <Center paddingTop='8px'>
@@ -125,10 +137,15 @@ const Profile = ({ data }: any) => {
                     </Center>
                 </VStack>
             ) : null}
-            {tix && (tix.length == 0 ? "Anda belum memiliki tiket" : (
-                tix.map((tic,idx) => <Ticket key={idx} uuid={tic.uuid} name={tic.booker_name} title={tic.title} seats={tic.seats} cost={tic.cost}  />)
-            ))}
-        </Box>
+            <Text fontWeight='bold' fontSize='13pt' paddingTop='25px'>Tiket Anda</Text>
+            <Flex w='90%' flexWrap='wrap'>    
+                {tix && (tix.length == 0 ? "Anda belum memiliki tiket" : (
+                    tix.map((tic,idx) => <Box outline='2px solid black' w='24%' h='200px' margin='5px' padding='5px'>
+                        <Ticket key={idx} uuid={tic.uuid} name={tic.booker_name} title={tic.title} seats={tic.seats} cost={tic.cost}  />
+                    </Box>)
+                ))}
+            </Flex>
+        </VStack>
     )
 }
 

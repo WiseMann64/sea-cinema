@@ -47,7 +47,7 @@ function App() {
 
   useEffect(() => {
     fetchData()
-    console.log(loggedIn)
+    document.title = 'SEA Cinema'
   }, [])
 
   return (

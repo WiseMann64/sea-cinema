@@ -35,8 +35,9 @@ const Register = () => {
     }
 
     return (
-        <Center w='25%' paddingTop='20px'>
+        <Center w='100%' paddingTop='50px' paddingLeft='40%' paddingRight='40%'>
             <VStack>
+                <Text fontWeight='bold' fontSize='18pt'>Registrasi</Text>
                 {registStatus == -1 ? null : registStatus == 0 ? (
                     <Text>
                         Username tidak tersedia
